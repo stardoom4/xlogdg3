@@ -1,0 +1,52 @@
+{{- define "header" -}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="icon" href="/public/logo.png">
+    <link rel="stylesheet" href="/public/style.css">
+    <title>{{.title}} | {{.SITENAME}}</title>
+    {{ if .page }} {{ widgets "head" .page }} {{ end }}
+  </head>
+  <body>
+
+    {{ template "commands" . }}
+
+    <div class="container is-max-desktop px-3" dir="auto" style="margin-bottom: 50vh;">
+      {{ template "title" . }}
+      <div class="content">
+        {{ end }}
+        {{define "footer" }}
+      </div>
+
+
+      {{ if .page }}
+      <footer class="mt-6 p-3 py-5">
+        <hr/>
+
+        <nav class="breadcrumb has-bullet-separator">
+          <ul>
+            {{ range $i, $a := links .page }}
+
+            <li>
+              <a href="{{.Link}}" class="icon-text has-text-grey-dark">
+                <span class="icon">
+                  {{ $icon := .Icon }}
+                  {{ if isFontAwesome $icon }} <i class="{{.Icon}}"></i> {{ else }} {{ $icon }} {{ end }}
+                </span>
+                <span>{{.Name}}</span>
+              </a>
+            </li>
+
+            {{ end }}
+          </ul>
+        </nav>
+
+      </footer>
+      {{ end }}
+
+    </div>
+  </body>
+</html>
+{{ end }}

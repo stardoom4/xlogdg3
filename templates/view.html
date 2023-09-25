@@ -1,0 +1,51 @@
+{{ template "header" . }}
+
+<div class="columns subtitle is-size-7">
+
+  {{ with properties .page }}
+  <div class="column">
+    <span class="icon-text">
+      {{ range . }}
+      <span class="icon"> <i class="{{.Icon}}"></i> </span>
+      <span>{{.Name}}</span>
+      {{ end }}
+    </span>
+  </div>
+  {{ end }}
+
+  {{ with quick_commands .page }}
+  <div class="column is-narrow">
+
+    {{ if not $.READONLY }} {{$.csrf}} {{ end }}
+
+    {{ range . }}
+    <a href="{{.Link}}" onclick="{{.OnClick}}" class="icon-text">
+      <span class="icon"><i class="{{.Icon}}"></i></span>
+      <span>{{.Name}}</span>
+    </a>
+    {{.Widget}}
+    {{ end }}
+
+  </div>
+  {{ end }}
+
+</div>
+
+<div class="view">
+  {{ widgets "before_view" .page }}
+  {{.content}}
+  {{ widgets "after_view" .page }}
+</div>
+
+{{ if not .READONLY }}
+<script>
+ document.addEventListener('keydown', e => {
+     if ( e.key === 's' && ( e.metaKey || e.ctrlKey ) ) {
+         e.preventDefault();
+         document.location.pathname = "{{.edit}}";
+     }
+ });
+</script>
+{{ end }}
+
+{{ template "footer" . }}
